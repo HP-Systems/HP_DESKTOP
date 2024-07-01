@@ -6,6 +6,10 @@ module.exports = {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
+    colors: {
+      'cian': '#76ABAE',
+      'cian-hover': '#5C8D8F'
+    },
     extend: {},
   },
   plugins: [
