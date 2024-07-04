@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import logo from '@/assets/Logo.png'; // Importar la imagen usando `import`
+import LoadingComponent from '@/components/LoadingComponent.vue';
 import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
@@ -15,18 +16,24 @@ const login = async () => {
     return;
   }
   try {
+    loading.value = true;
     await axios.post(`${process.env.VUE_APP_API_URL}/login`, {
       email: email.value,
       password: password.value
     }).then(
       (response) => {
+        loading.value = false;
         localStorage.setItem('token', response.data.token);
         router.push('/dashboard');
       }
-    );
+    ).catch(
+      (error) => {
+        loading.value = false;
+        msg.value = error.response.data.message || 'Error al iniciar sesión';
+      }
+    )
   } catch (error) {
     msg.value = 'Credenciales incorrectas';
-    console.error(error);
   }
 }
 </script>

@@ -28,7 +28,16 @@ export const getGuests = async () => {
 
 export const registerGuest = async (data) => {
     try {
-        const response = await api.post('/users', data);
+        const response = await api.post('/register', data);
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+export const updateGuest = async (data, id) => {
+    try {
+        const response = await api.put(`/guestUpdate/${id}`, data);
         return response.data;
     } catch (error) {
         return Promise.reject(error);
