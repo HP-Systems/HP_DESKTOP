@@ -66,15 +66,15 @@ function firstPage() {
 // END PAGINATOR FUNCTIONS
 
 // Function to toggle modal and set guest details
-const toggleModal = (act, gue = {}) => {
-  modal.value = !modal.value;
+const toggleModal = (act, gue) => {
   action.value = act;
   guest.value = gue;
-
+  modal.value = !modal.value;
 };
 
 // Function to update guests list
 const updateGuests = (data) => {
+  console.log('Data es', data);
   if (action.value === 1) {
     console.log('Action es', action.value);
     guests.value = [...guests.value, data];
@@ -92,6 +92,7 @@ onMounted(async () => {
     const response = await getGuests();
     loading.value = false;
     guests.value = response.data;
+    console.log('Guests', guests.value);
   } catch (error) {
     loading.value = false;
     console.error(error);

@@ -36,6 +36,7 @@ export const registerGuest = async (data) => {
 }
 
 export const updateGuest = async (data, id) => {
+  console.log(data, id);
     try {
         const response = await api.put(`/guestUpdate/${id}`, data);
         return response.data;

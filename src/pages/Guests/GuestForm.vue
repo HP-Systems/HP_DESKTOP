@@ -87,6 +87,8 @@ const submit = () => {
             registerGuest(form.value).then((response) => {
                 loading.value = false;
                 emit('closeModal');
+                form.value.id = response.data.id;
+                console.log(response.data);
                 ok(response.data.message || 'Guardado correctamente');
             }).catch((error) => {
                 loading.value = false;
@@ -99,6 +101,7 @@ const submit = () => {
             updateGuest(form.value, props.guest.id).then((response) => {
                 loading.value = false;
                 emit('closeModal');
+                form.value.id = response.data.id;
                 ok(response.data.message || 'Editado correctamente');
             }).catch((error) => {
                 loading.value = false;
@@ -141,23 +144,23 @@ const er = (msj) => {
         <h1 class="flex justify-center text-2xl font-semibold mb-5">{{ title }}</h1>
         <div class="w-5/6 columns-2">
             <div class="w-full p-2">
-                <InputComponent label="Nombre:" id="nombre" class="w-full mt-1 mr-6 block-sm" v-model="form.nombre" :error="errors.nombre && errors.nombre[0] !== null ? errors.nombre[0] : ''"/>
+                <InputComponent label="Nombre:" id="nombre" class="w-full mt-1 mr-6 block-sm" v-model="form.nombre" :error="errors && errors.nombre && errors.nombre[0] !== null ? errors.nombre[0] : ''"/>
             </div>
             <div class="w-full p-2">
-                <InputComponent label="Apellido:" id="Apellido" class="w-full mt-1 mr-6 block-sm" v-model="form.apellido" :error="errors.apellido && errors.apellido[0] !== null ? errors.apellido[0] : ''"/>
+                <InputComponent label="Apellido:" id="Apellido" class="w-full mt-1 mr-6 block-sm" v-model="form.apellido" :error="errors && errors.apellido && errors.apellido[0] !== null ? errors.apellido[0] : ''"/>
             </div>
         </div>
         <div v-if="action == 2" class="w-5/6 columns-1">
             <div class="w-full p-3">
-                <InputComponent label="Teléfono:" id="telefono" class="w-full mt-1 mr-6 block-sm" :maxLength="10" v-model="form.telefono"  :error="errors.telefono && errors.telefono[0] !== null ? errors.telefono[0] : ''"/>
+                <InputComponent label="Teléfono:" id="telefono" class="w-full mt-1 mr-6 block-sm" :maxLength="10" v-model="form.telefono"  :error="errors && errors.telefono && errors.telefono[0] !== null ? errors.telefono[0] : ''"/>
             </div>
         </div>
         <div v-if="action == 1" class="w-5/6 columns-2">
             <div class="w-full p-2">
-                <InputComponent type="email" label="Email:" id="nombre" class="w-full mt-1 mr-6 block-sm" v-model="form.email" :error="errors.email && errors.email[0] !== null ? errors.email[0] : ''"/>
+                <InputComponent type="email" label="Email:" id="nombre" class="w-full mt-1 mr-6 block-sm" v-model="form.email" :error="errors && errors.email && errors.email[0] !== null ? errors.email[0] : ''"/>
             </div>
             <div class="w-full p-3">
-                <InputComponent label="Teléfono:" id="telefono" class="w-full mt-1 mr-6 block-sm" :maxLength="10" v-model="form.telefono"  :error="errors.telefono && errors.telefono[0] !== null ? errors.telefono[0] : ''"/>
+                <InputComponent label="Teléfono:" id="telefono" class="w-full mt-1 mr-6 block-sm" :maxLength="10" v-model="form.telefono"  :error="errors && errors.telefono && errors.telefono[0] !== null ? errors.telefono[0] : ''"/>
             </div>
         </div>
     </div>

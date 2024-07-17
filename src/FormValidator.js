@@ -29,10 +29,20 @@ class FormValidator {
                   if (date == 'Invalid Date') {
                     errores[key].push('Fecha no válida');
                   }
+                  let year = date.getFullYear();
+                  let month = (date.getMonth() + 1).toString().padStart(2, '0');
+                  let day = date.getDate().toString().padStart(2, '0');
+                  form[key] = `${year}-${month}-${day}`;
                 }
                 if (reglas.number && isNaN(form[key])) {
                   errores[key].push('Debe ser un número');
                 }
+                if(reglas.nonSpecial && !/^[a-zA-Z0-9]*$/.test(form[key])){
+                  errores[key].push('No se permiten caracteres especiales');
+                }
+                if (reglas.name && !/^[a-zA-Z\sáéíóúÁÉÍÓÚñÑüÜ]*$/.test(form[key])) {
+                  errores[key].push('Solo se permiten letras y espacios');
+                } 
               }
             }
             return errores;

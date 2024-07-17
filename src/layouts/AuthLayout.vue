@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+import { logout } from '@/pages/DashboardRequest';
+import router from '@/router';
 
 onMounted(() => {
   initFlowbite();
@@ -18,6 +20,12 @@ onMounted(() => {
     }
   }
 });
+
+const logoutUser = async () => {
+  await logout();
+  localStorage.removeItem('token');
+  router.push('/');
+};
 
 const openedSidebar = ref(localStorage.getItem('openedSidebar') === 'true');
 
@@ -56,6 +64,14 @@ const toggleSidebar = () => {
       <div class="h-full px-3 py-4 overflow-y-auto bg-cian">
         <ul class="space-y-2 font-medium mt-6">
           <li>
+            <button @click="logoutUser" class="flex items-center p-2 text-gray-200 rounded-lg  hover:bg-cian-hover group w-full">
+              <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
+              </svg>
+              <span class="ms-3 font-bold">Logout</span>
+            </button>
+          </li>
+          <li>
             <RouterLink to="/dashboard" class="flex items-center p-2 text-gray-200 rounded-lg  hover:bg-cian-hover group">
                 <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
@@ -69,6 +85,12 @@ const toggleSidebar = () => {
                 <path fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H6Zm7.25-2.095c.478-.86.75-1.85.75-2.905a5.973 5.973 0 0 0-.75-2.906 4 4 0 1 1 0 5.811ZM15.466 20c.34-.588.535-1.271.535-2v-1a5.978 5.978 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4.535Z" clip-rule="evenodd"/>
               </svg>
               <span class="ms-3 font-bold">Guests</span>
+            </RouterLink>
+            <RouterLink to="/rooms" class="flex items-center p-2 text-gray-200 rounded-lg  hover:bg-cian-hover group">
+              <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M6 5V4a1 1 0 1 1 2 0v1h3V4a1 1 0 1 1 2 0v1h3V4a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v2H3V7a2 2 0 0 1 2-2h1ZM3 19v-8h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm5-6a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2H8Z" clip-rule="evenodd"/>
+              </svg>
+              <span class="ms-3 font-bold">Reservations</span>
             </RouterLink>
           </li>
         </ul>
