@@ -38,7 +38,6 @@ export const getReservations = async (startDate='', endDate='') => {
     endDate = `${year}-${month}-${day}`;
   }
     try {
-      console.log(startDate, endDate);
         const response = await api.get(`/reservas/${startDate}/${endDate}`);
         return response.data;
     } catch (error) {
@@ -62,4 +61,31 @@ export const obtenerHabitaciones = async (data) => {
     } catch (error) {
       return Promise.reject(error);
     }
+}
+
+export const checkIn = async (id) => {
+    try {
+        const response = await api.get(`/reservas/checkin/${id}`);
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+export const checkOut = async (id) => {
+  try {
+      const response = await api.get(`/reservas/checkout/${id}`);
+      return response.data;
+  } catch (error) {
+      return Promise.reject(error);
+  }
+}
+
+export const asignNFC = async (id, data) => {
+  try {
+      const response = await api.post(`/tarjetas/asignarReserva/${id}`, data);
+      return response.data;
+  } catch (error) {
+      return Promise.reject(error);
+  }
 }

@@ -24,7 +24,7 @@ const login = async () => {
       (response) => {
         loading.value = false;
         localStorage.setItem('token', response.data.token);
-        router.push('/dashboard');
+        router.push('/rooms');
       }
     ).catch(
       (error) => {

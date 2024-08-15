@@ -9,6 +9,11 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: DashboardAuth, meta: { requiresAuth: true }},
   { path: '/guests', name: 'Guests', component: GuestIndex, meta: { requiresAuth: true }},
   { path: '/rooms', name: 'Rooms', component: ReservationsIndex, meta: { requiresAuth: true }},
+  { path: '/staff', name: 'Personal', component: () => import('@/pages/Staff/StaffIndex.vue'), meta: { requiresAuth: true }},
+  { path: '/cards', name: 'NfcCards', component: () => import('@/pages/NFC/NFCIndex.vue'), meta: { requiresAuth: true }},
+  { path: '/services', name: 'Services', component: () => import('@/pages/Services/ServicesIndex.vue'), meta: { requiresAuth: true }},
+  { path: '/cleaners', name: 'Cleaners', component: () => import('@/pages/Cleaners/CleanersIndex.vue'), meta: { requiresAuth: true }},
+  { path: '/:pathMatch(.*)', redirect: '/' },
 ];
 
 const router = createRouter({

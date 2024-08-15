@@ -23,6 +23,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // Reference for the input element
@@ -47,12 +51,6 @@ onMounted(() => {
 defineExpose({ 
   focus: () => input.value.focus()
 });
-
-
-// Watch for changes in the input value and emit the update event
-
-
-// Emit the update:modelValue event
 </script>
 
 <template>
@@ -63,6 +61,7 @@ defineExpose({
       :value="props.modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       ref="input"
+      :disabled="props.disabled"
       class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
       placeholder=" "
       required

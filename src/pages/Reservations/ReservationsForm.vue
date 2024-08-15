@@ -18,6 +18,8 @@ const title = ref('Reservar');
 const emit = defineEmits(['newReservation', 'closeModal', 'editReservation']);
 const habitaciones = ref([]);
 const guests = ref([]);
+var yesterday = new Date()
+yesterday = `${(yesterday.getMonth() + 1).toString().padStart(2, '0')}/${yesterday.getDate().toString().padStart(2, '0')}/${yesterday.getFullYear()}`;
 const guest = ref({});
 
 const handleSelectedGuest = (gue) => {
@@ -88,7 +90,8 @@ const form = ref({
     fecha_entrada: '',
     fecha_salida: '',
     habitaciones: [],
-    huespedID: ''
+    huespedID: '',
+    huesped: guest.value,
 });
 
 const errors = ref({});
@@ -104,6 +107,13 @@ const validarFormulario = () => {
 }
 
 const validarGetRooms = () => {
+    const [year, month, day] = form.value.fecha_entrada.split('-');
+      const formattedFechaEntrada = `${month}/${day}/${year}`;
+
+      if (new Date(formattedFechaEntrada) < new Date(yesterday)) {
+        errors.value.fecha_entrada = ['Fecha debe ser >= a hoy'];
+        return false;
+      }
     errors.value = getRoomsValidator.validar(form.value);
     for (const key in errors.value) {
         if (errors.value[key].length > 0) {
@@ -138,10 +148,8 @@ const getRooms = async () => {
     }
     try {
         loading.value = true;
-        console.log(form.value);
         const response = await obtenerHabitaciones(form.value);
         habitaciones.value = response.data;
-        console.log(habitaciones.value);
         loading.value = false;
         // eslint-disable-next-line no-unused-vars
         habitaciones.value.forEach(habitacion => {
@@ -179,10 +187,18 @@ const submit = () => {
         loading.value = true;
         if (props.action === 1) {
             console.log(form.value);
+            const addOneDay = (dateStr) => {
+            const date = new Date(dateStr);
+            date.setDate(date.getDate() + 1); // Adds one day to the date
+            return date.toISOString().split('T')[0]; // Returns the date in "YYYY-MM-DD" format
+        };
+
+        form.value.fecha_entrada = addOneDay(form.value.fecha_entrada);
+        form.value.fecha_salida = addOneDay(form.value.fecha_salida);
             createReservation(form.value).then((response) => {
                 loading.value = false;
                 emit('closeModal');
-                console.log(response.data);
+                form.value = response.data;
                 ok(response.data.message || 'Guardado correctamente');
             }).catch((error) => {
                 loading.value = false;
@@ -218,6 +234,7 @@ const ok = (msj) => {
         showConfirmButton: false,
         timer: 1700,
     });
+    form.value.huesped = guest.value;
     emit('newReservation', form.value);
     loading.value = false;
 }

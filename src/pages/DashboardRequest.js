@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.VUE_APP_API_GLOBAL,
+  baseURL: "http://qa.sesystems.online/api/",
   headers: {
     'Content-Type': 'application/json',
   },
